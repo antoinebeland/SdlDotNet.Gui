@@ -34,5 +34,10 @@ namespace SdlDotNet.Gui.Control
             get { return Position; }
             set { Position = value; }
         }
+
+        /// <summary>
+        ///     Gets or sets the background color of the control.
+        /// </summary>
+        public abstract Color BackColor { get; set; }
     }
 }

@@ -31,5 +31,10 @@ namespace SdlDotNet.Gui.Control
         ///     Gets or sets the location of the control.
         /// </summary>
         Point Location { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the background color of the control.
+        /// </summary>
+        Color BackColor { get; set; }
     }
 }

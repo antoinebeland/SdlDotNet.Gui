@@ -17,5 +17,6 @@ namespace SdlDotNet.Gui.Control
         public int FontHeight { get; set; }
         public Color ForeColor { get; set; }
         public Font Font { get; set; }
+        public override Color BackColor { get; set; }
     }
 }

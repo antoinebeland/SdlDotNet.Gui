@@ -48,10 +48,10 @@ namespace SdlDotNet.Gui.Control
 
         public Color ForeColor
         {
-            get { return _labelConfiguration.Color; }
+            get { return _labelConfiguration.ForeColor; }
             set
             {
-                _labelConfiguration.Color = value;
+                _labelConfiguration.ForeColor = value;
                 Surface = CreateSurface(_labelConfiguration);
             }
 
@@ -59,8 +59,31 @@ namespace SdlDotNet.Gui.Control
 
         private static Surface CreateSurface(LabelConfiguration labelConfiguration)
         {
-            return new Graphics.Font(labelConfiguration.FontName, labelConfiguration.FontHeight)
-                .Render(labelConfiguration.Text, labelConfiguration.Color, true);
+            var surface = new Graphics.Font(labelConfiguration.FontName, labelConfiguration.FontHeight)
+                .Render(labelConfiguration.Text, labelConfiguration.ForeColor, true);
+
+            if (labelConfiguration.BackColor != Color.Transparent)
+            {
+                var backgroundSurface = new Surface(surface.Rectangle);
+                backgroundSurface.Fill(labelConfiguration.BackColor);
+
+                backgroundSurface.Blit(surface);
+
+                return backgroundSurface;
+            }
+
+            return surface;
+        }
+
+        public override Color BackColor
+        {
+            get { return _labelConfiguration.BackColor; }
+            set
+            {
+                _labelConfiguration.BackColor = value;
+                Surface = CreateSurface(_labelConfiguration);
+            } 
+            
         }
     }
 }

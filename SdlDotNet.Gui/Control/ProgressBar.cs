@@ -10,5 +10,6 @@ namespace SdlDotNet.Gui.Control
         }
 
         public uint Value { get; set; }
+        public override Color BackColor { get; set; }
     }
 }

@@ -15,7 +15,8 @@ namespace SdlDotNet.TestApplication
                 Events.Quit += ApplicationQuitEventHandler;
                 var labelConfiguration = new LabelConfiguration
                 {
-                    Color = Color.White,
+                    ForeColor = Color.White,
+                    BackColor = Color.Transparent,
                     FontHeight = 16,
                     FontName = @"arial.ttf",
                     Text = "Hello world"
