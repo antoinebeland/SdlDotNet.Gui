@@ -2,7 +2,7 @@
 
 namespace SdlDotNet.Gui.Control
 {
-    public interface ILabel
+    public interface ITextControl
     {
         string Text { get; set; }
         string FontName { get; set; }

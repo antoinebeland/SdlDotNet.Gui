@@ -7,6 +7,7 @@ namespace SdlDotNet.Gui.Control
     {
         public ProgressBar(Surface surface, Point location) : base(surface, location)
         {
+
         }
 
         public uint Value { get; set; }

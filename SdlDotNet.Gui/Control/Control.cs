@@ -6,10 +6,16 @@ namespace SdlDotNet.Gui.Control
 {
     public abstract class Control : Sprite, IControl
     {
+        protected Control(Point location)
+            : base(new Surface(new Size()), location)
+        {
+
+        }
+
         protected Control(Surface surface, Point location)
             : base(surface, location)
         {
-            
+
         }
 
         /// <summary>
@@ -39,5 +45,12 @@ namespace SdlDotNet.Gui.Control
         ///     Gets or sets the background color of the control.
         /// </summary>
         public abstract Color BackColor { get; set; }
+
+        public bool Focused { get; private set; }
+
+        protected bool IsSelected(Point position)
+        {
+            return Focused = Rectangle.Contains(position);
+        }
     }
 }

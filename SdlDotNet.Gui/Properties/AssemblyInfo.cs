@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
 [assembly: AssemblyTitle("SdlDotNet.Gui")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This library provides graphical user interface (GUI) support for SdlDotNet.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SdlDotNet.Gui")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © Antoine Beland")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
