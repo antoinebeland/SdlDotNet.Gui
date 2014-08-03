@@ -11,7 +11,7 @@ using Timer = System.Timers.Timer;
 
 namespace SdlDotNet.Gui.Control
 {
-    public sealed class TextBox : TextControl
+    public sealed class TextBox : Control
     {
         private readonly KeyboardListener _keyboardListener;
         private Size _fieldSize;
@@ -35,7 +35,7 @@ namespace SdlDotNet.Gui.Control
             _keyboardListener.KeyboardEvent += KeyboardEvent;
             Events.MouseButtonDown += ClickEvent;
 
-            Surface = CreateSurface(configuration);
+            SetSurface(ControlConfiguration);
         }
 
         public Size FieldSize
@@ -44,7 +44,7 @@ namespace SdlDotNet.Gui.Control
             set
             {
                 _fieldSize = value;
-                Surface = CreateSurface(ControlConfiguration);
+                SetSurface(ControlConfiguration);
             }
         }
 
@@ -53,7 +53,7 @@ namespace SdlDotNet.Gui.Control
             _focusChar = (_displayFocusChar) ? "|" : String.Empty;
             _displayFocusChar = !_displayFocusChar;
 
-            Surface = CreateSurface(ControlConfiguration);
+            SetSurface(ControlConfiguration);
         }
 
         private void ClickEvent(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -63,14 +63,14 @@ namespace SdlDotNet.Gui.Control
             if (Focused && !_timer.Enabled)
             {
                 _timer.Start();
-                Surface = CreateSurface(ControlConfiguration);
+                SetSurface(ControlConfiguration);
             }
             else if(_timer.Enabled)
             {
                 _timer.Stop();
                 _displayFocusChar = false;
                 _focusChar = "|";
-                Surface = CreateSurface(ControlConfiguration);
+                SetSurface(ControlConfiguration);
             }
         }
 
@@ -81,32 +81,30 @@ namespace SdlDotNet.Gui.Control
 
         protected override Surface CreateSurface(ControlConfiguration configuration)
         {
-            lock (configuration)
+            Surface textSurface = new Font(configuration.FontName, configuration.FontHeight)
+                .Render(configuration.Text, configuration.ForeColor, true);
+
+            // TODO: What whe doing in the case: Color.Transparent... 
+            if (configuration.BackColor != Color.Transparent)
             {
-                Surface textSurface = new Font(configuration.FontName, configuration.FontHeight)
-                    .Render(configuration.Text, configuration.ForeColor, true);
+                var backgroundSurface = new Surface(_fieldSize);
+                backgroundSurface.Fill(configuration.BackColor);
 
-                // TODO: What whe doing in the case: Color.Transparent... 
-                if (configuration.BackColor != Color.Transparent)
+                backgroundSurface.Blit(textSurface);
+
+                if (Focused)
                 {
-                    var backgroundSurface = new Surface(_fieldSize);
-                    backgroundSurface.Fill(configuration.BackColor);
+                    var focusSurface = new Font(configuration.FontName, configuration.FontHeight)
+                        .Render(_focusChar, configuration.ForeColor, true);
 
-                    backgroundSurface.Blit(textSurface);
-
-                    if (Focused)
-                    {
-                        var focusSurface = new Font(configuration.FontName, configuration.FontHeight)
-                            .Render(_focusChar, configuration.ForeColor, true);
-
-                        backgroundSurface.Blit(focusSurface, new Point(textSurface.Width, 0));
-                    }
-
-                    return backgroundSurface;
+                    backgroundSurface.Blit(focusSurface, new Point(textSurface.Width, 0));
                 }
 
-                return textSurface;
+                return backgroundSurface;
             }
+
+            return textSurface;
+            
         }
     }
 }

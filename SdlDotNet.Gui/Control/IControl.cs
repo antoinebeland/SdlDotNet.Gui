@@ -36,5 +36,10 @@ namespace SdlDotNet.Gui.Control
         ///     Gets or sets the background color of the control.
         /// </summary>
         Color BackColor { get; set; }
+
+        string Text { get; set; }
+        string FontName { get; set; }
+        int FontHeight { get; set; }
+        Color ForeColor { get; set; }
     }
 }

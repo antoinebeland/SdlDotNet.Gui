@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using SdlDotNet.Graphics;
+using SdlDotNet.Gui.Configurations;
 
 namespace SdlDotNet.Gui.Control
 {
@@ -11,6 +12,10 @@ namespace SdlDotNet.Gui.Control
         }
 
         public uint Value { get; set; }
-        public override Color BackColor { get; set; }
+
+        protected override Surface CreateSurface(ControlConfiguration configuration)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

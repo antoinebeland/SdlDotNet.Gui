@@ -34,14 +34,24 @@ namespace SdlDotNet.TestApplication
             };
 
             var label = new Label(controlConfiguration, new Point(0, 0));
+            label.Click += (sender, args) => Console.WriteLine("Label clicked!");
+
             var button = new Button(new Size(50, 50), new Point(50, 50));
 
             controlConfiguration.Text = "";
 
-            var textBox = new TextBox(new Size(200, 25), new Point(100, 100), controlConfiguration);
-            textBox.FieldSize = new Size(300, 25);
+            var textBox = new TextBox(new Size(200, 25), new Point(100, 100), controlConfiguration)
+            {
+                FieldSize = new Size(300, 25)
+            };
+            textBox.GotFocus += (sender, args) => Console.WriteLine("Textbox focus got!");
+            textBox.LostFocus += (sender, args) => Console.WriteLine("Textbox focus lost!");
+
 
             button.Click += (sender, eventArgs) => Console.WriteLine("Click on the button!");
+            button.MouseEnter += (sender, args) => Console.WriteLine("Mouse entered on the button!");
+            button.MouseHover += (sender, args) => Console.WriteLine("Mouse hover the button!");
+            button.MouseLeave += (sender, args) => Console.WriteLine("Mouse left the button!");
             button.Surface.Fill(Color.SteelBlue);
 
             _spriteCollection.Add(label);
@@ -66,6 +76,7 @@ namespace SdlDotNet.TestApplication
         public void Dispose()
         {
             _video.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public static void Main()

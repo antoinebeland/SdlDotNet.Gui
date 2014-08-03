@@ -8,7 +8,7 @@ namespace SdlDotNet.Gui.Control
     /// <summary>
     ///     Represents a standard label.
     /// </summary>
-    public sealed class Label : TextControl
+    public class Label : Control
     {
         /// <summary>
         ///     Initializes a new instance of the Label class.
@@ -21,12 +21,18 @@ namespace SdlDotNet.Gui.Control
             Surface = CreateSurface(controlConfiguration);
         }
 
+        public override sealed Surface Surface
+        {
+            get { return base.Surface; }
+            set { base.Surface = value; }
+        }
+
         /// <summary>
         ///     Creates a new surface for the label.
         /// </summary>
         /// <param name="labelConfiguration">Configuration of the label</param>
         /// <returns>New surface representing the label</returns>
-        protected override Surface CreateSurface(ControlConfiguration labelConfiguration)
+        protected override sealed Surface CreateSurface(ControlConfiguration labelConfiguration)
         {
             Surface surface = new Font(labelConfiguration.FontName, labelConfiguration.FontHeight)
                 .Render(labelConfiguration.Text, labelConfiguration.ForeColor, true);
