@@ -8,8 +8,8 @@
     <ProjectGuid>{3A74A76A-60B2-4972-924D-8535F0B6236D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SdlDotNet.TestApplication</RootNamespace>
-    <AssemblyName>SdlDotNet.TestApplication</AssemblyName>
+    <RootNamespace>TestApplication</RootNamespace>
+    <AssemblyName>TestApplication</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

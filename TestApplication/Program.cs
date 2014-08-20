@@ -5,7 +5,7 @@ using SdlDotNet.Graphics.Sprites;
 using SdlDotNet.Gui.Control;
 using System.Drawing;
 
-namespace SdlDotNet.TestApplication
+namespace TestApplication
 {
     class Program : IDisposable
     {

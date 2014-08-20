@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdlDotNet.Gui", "SdlDotNet.Gui\SdlDotNet.Gui.csproj", "{AB83802B-4BBC-403B-8323-279C906760BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdlDotNet.TestApplication", "SdlDotNet.TestApplication\SdlDotNet.TestApplication.csproj", "{3A74A76A-60B2-4972-924D-8535F0B6236D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "TestApplication\TestApplication.csproj", "{3A74A76A-60B2-4972-924D-8535F0B6236D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
