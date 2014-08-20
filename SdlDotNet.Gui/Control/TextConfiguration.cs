@@ -1,14 +1,12 @@
 ﻿using System.Drawing;
 
-namespace SdlDotNet.Gui.Configurations
+namespace SdlDotNet.Gui.Control
 {
-    public class ControlConfiguration
+    public class TextConfiguration
     {
-        // TODO: Remove Text from this... ?
         public string Text { get; set; }
         public string FontName { get; set; }
         public int FontHeight { get; set; }
         public Color ForeColor { get; set; }
-        public Color BackColor { get; set; }
     }
 }

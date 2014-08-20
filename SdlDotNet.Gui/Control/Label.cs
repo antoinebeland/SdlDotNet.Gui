@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using SdlDotNet.Graphics;
-using SdlDotNet.Gui.Configurations;
+using SdlDotNet.Graphics.Primitives;
 using Font = SdlDotNet.Graphics.Font;
 
 namespace SdlDotNet.Gui.Control
@@ -13,41 +13,36 @@ namespace SdlDotNet.Gui.Control
         /// <summary>
         ///     Initializes a new instance of the Label class.
         /// </summary>
-        /// <param name="controlConfiguration">Configuration of the label</param>
+        /// <param name="textConfiguration">Configuration of the label</param>
         /// <param name="location">Location of the label</param>
-        public Label(ControlConfiguration controlConfiguration, Point location)
-            : base(location, controlConfiguration)
+        public Label(TextConfiguration textConfiguration, Point location)
+            : base(location, textConfiguration)
         {
-            Surface = CreateSurface(controlConfiguration);
-        }
-
-        public override sealed Surface Surface
-        {
-            get { return base.Surface; }
-            set { base.Surface = value; }
+            SetSurface();
         }
 
         /// <summary>
         ///     Creates a new surface for the label.
         /// </summary>
-        /// <param name="labelConfiguration">Configuration of the label</param>
         /// <returns>New surface representing the label</returns>
-        protected override sealed Surface CreateSurface(ControlConfiguration labelConfiguration)
+        protected override sealed Surface CreateSurface()
         {
-            Surface surface = new Font(labelConfiguration.FontName, labelConfiguration.FontHeight)
-                .Render(labelConfiguration.Text, labelConfiguration.ForeColor, true);
+            var text = new Font(FontName, FontHeight).Render(Text, ForeColor, true);
 
-            if (labelConfiguration.BackColor != Color.Transparent)
+            if (BackgroundImage == null && BackColor == Color.Transparent)
+                return text;
+
+            var surface = new Surface(text.Rectangle);
+            if (BackgroundImage != null)
+                surface.Blit(BackgroundImage);
+
+            if (BackColor != Color.Transparent)
             {
-                // TODO: Add background surface method into Control (static)...
-                var backgroundSurface = new Surface(surface.Rectangle);
-                backgroundSurface.Fill(labelConfiguration.BackColor);
-
-                backgroundSurface.Blit(surface);
-
-                return backgroundSurface;
+                var box = new Box(new Point(), text.Size);
+                box.Draw(surface, BackColor, true, true);
             }
 
+            surface.Blit(text);
             return surface;
         }
     }

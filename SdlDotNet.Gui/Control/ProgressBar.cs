@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using SdlDotNet.Graphics;
-using SdlDotNet.Gui.Configurations;
 
 namespace SdlDotNet.Gui.Control
 {
@@ -13,7 +12,7 @@ namespace SdlDotNet.Gui.Control
 
         public uint Value { get; set; }
 
-        protected override Surface CreateSurface(ControlConfiguration configuration)
+        protected override Surface CreateSurface()
         {
             throw new System.NotImplementedException();
         }

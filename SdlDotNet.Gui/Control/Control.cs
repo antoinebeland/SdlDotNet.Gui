@@ -3,7 +3,6 @@ using System.Drawing;
 using SdlDotNet.Core;
 using SdlDotNet.Graphics;
 using SdlDotNet.Graphics.Sprites;
-using SdlDotNet.Gui.Configurations;
 using SdlDotNet.Input;
 
 namespace SdlDotNet.Gui.Control
@@ -13,18 +12,21 @@ namespace SdlDotNet.Gui.Control
     /// </summary>
     public abstract class Control : Sprite, IControl
     {
-        protected readonly ControlConfiguration ControlConfiguration;
         private readonly object _surfaceLock = new object();
+        private readonly TextConfiguration _textConfiguration;
+        private Color _backColor;
+        private Surface _backgroundImage;
 
-        private bool _focused;
-        private bool _isHover;
+        private bool _isFocused;
+        private bool _isHovered;
 
-        protected Control(Point location, ControlConfiguration controlConfiguration)
+        protected Control(Point location, TextConfiguration textConfiguration)
             : this(location)
         {
-            ControlConfiguration = controlConfiguration;
+            _textConfiguration = textConfiguration;
+            _backColor = Color.Transparent;
+            _backgroundImage = null;
         }
-
 
         protected Control(Point location)
             : this(new Surface(new Size()), location)
@@ -58,16 +60,29 @@ namespace SdlDotNet.Gui.Control
         /// <summary>
         ///     Indicates if the control is focused.
         /// </summary>
-        public bool Focused
+        public bool IsFocused
         {
-            get { return _focused; }
+            get { return _isFocused; }
 
             private set
             {
-                if (value != _focused)
+                if (value != _isFocused)
                     InvokeEvent(value ? GotFocus : LostFocus, this, EventArgs.Empty);
 
-                _focused = value;
+                _isFocused = value;
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets the background image of the control.
+        /// </summary>
+        public Surface BackgroundImage
+        {
+            get { return _backgroundImage; }
+            set
+            {
+                _backgroundImage = value;
+                SetSurface();
             }
         }
 
@@ -99,63 +114,63 @@ namespace SdlDotNet.Gui.Control
         /// </summary>
         public Color BackColor
         {
-            get { return ControlConfiguration.BackColor; }
+            get { return _backColor; }
             set
             {
-                ControlConfiguration.BackColor = value;
-                SetSurface(ControlConfiguration);
+                _backColor = value;
+                SetSurface();
             }
         }
 
         /// <summary>
-        ///     Gets or sets the text of the label.
+        ///     Gets or sets the text of the control.
         /// </summary>
         public string Text
         {
-            get { return ControlConfiguration.Text; }
+            get { return _textConfiguration.Text; }
             set
             {
-                ControlConfiguration.Text = value;
-                SetSurface(ControlConfiguration);
+                _textConfiguration.Text = value;
+                SetSurface();
             }
         }
 
         /// <summary>
-        ///     Gets or sets the font name of the label.
+        ///     Gets or sets the font name of the control.
         /// </summary>
         public string FontName
         {
-            get { return ControlConfiguration.FontName; }
+            get { return _textConfiguration.FontName; }
             set
             {
-                ControlConfiguration.FontName = value;
-                SetSurface(ControlConfiguration);
+                _textConfiguration.FontName = value;
+                SetSurface();
             }
         }
 
         /// <summary>
-        ///     Gets or sets the font height of the label.
+        ///     Gets or sets the font height of the control.
         /// </summary>
         public int FontHeight
         {
-            get { return ControlConfiguration.FontHeight; }
+            get { return _textConfiguration.FontHeight; }
             set
             {
-                ControlConfiguration.FontHeight = value;
-                SetSurface(ControlConfiguration);
+                _textConfiguration.FontHeight = value;
+                SetSurface();
             }
         }
 
         /// <summary>
-        ///     Gets or sets the fore color of the label.
+        ///     Gets or sets the fore color of the control.
         /// </summary>
         public Color ForeColor
         {
-            get { return ControlConfiguration.ForeColor; }
+            get { return _textConfiguration.ForeColor; }
             set
             {
-                ControlConfiguration.ForeColor = value;
-                SetSurface(ControlConfiguration);
+                _textConfiguration.ForeColor = value;
+                SetSurface();
             }
         }
 
@@ -196,7 +211,7 @@ namespace SdlDotNet.Gui.Control
         /// <returns>TRUE if the control is selected. FALSE otherwise.</returns>
         protected bool IsSelected(Point position)
         {
-            return Focused = IsHovered(position);
+            return IsFocused = IsHovered(position);
         }
 
         /// <summary>
@@ -212,15 +227,14 @@ namespace SdlDotNet.Gui.Control
         /// <summary>
         ///     Sets the surface with the specified control configuration.
         /// </summary>
-        /// <param name="configuration">The control configuration</param>
         /// <remarks>Threading safe method.</remarks>
-        protected void SetSurface(ControlConfiguration configuration)
+        protected void SetSurface()
         {
             lock (_surfaceLock)
             {
                 Surface.Dispose();
                 Surface = null;
-                Surface = CreateSurface(configuration);
+                Surface = CreateSurface();
                 GC.Collect();
             }
         }
@@ -228,9 +242,8 @@ namespace SdlDotNet.Gui.Control
         /// <summary>
         ///     Creates a new surface with the specified control configuration.
         /// </summary>
-        /// <param name="configuration">The control configuration</param>
         /// <returns>New surfaces</returns>
-        protected abstract Surface CreateSurface(ControlConfiguration configuration);
+        protected abstract Surface CreateSurface();
 
         /// <summary>
         ///     Raises the Click event.
@@ -250,18 +263,18 @@ namespace SdlDotNet.Gui.Control
         /// <param name="mouseMotionEventArgs">Mouse motion event arguments</param>
         private void OnMouseMotion(object sender, MouseMotionEventArgs mouseMotionEventArgs)
         {
-            if (IsHovered(mouseMotionEventArgs.Position) && _isHover)
+            if (IsHovered(mouseMotionEventArgs.Position) && _isHovered)
                 InvokeEvent(MouseHover, sender, mouseMotionEventArgs);
 
             else if (IsHovered(mouseMotionEventArgs.Position))
             {
                 InvokeEvent(MouseEnter, sender, mouseMotionEventArgs);
-                _isHover = true;
+                _isHovered = true;
             }
-            else if (_isHover)
+            else if (_isHovered)
             {
                 InvokeEvent(MouseLeave, sender, mouseMotionEventArgs);
-                _isHover = false;
+                _isHovered = false;
             }
         }
 

@@ -2,7 +2,6 @@
 using SdlDotNet.Core;
 using SdlDotNet.Graphics;
 using SdlDotNet.Graphics.Sprites;
-using SdlDotNet.Gui.Configurations;
 using SdlDotNet.Gui.Control;
 using System.Drawing;
 
@@ -24,17 +23,18 @@ namespace SdlDotNet.TestApplication
             Events.Quit += ApplicationQuitEventHandler;
             Events.TargetFps = 30;
             Events.Tick += EventsOnTick;
-            ControlConfiguration controlConfiguration = new ControlConfiguration
+            var controlConfiguration = new TextConfiguration
             {
                 ForeColor = Color.Black,
-                BackColor = Color.White,
                 FontHeight = 24,
                 FontName = @"arial.ttf",
                 Text = "Hello world!",
             };
 
             var label = new Label(controlConfiguration, new Point(0, 0));
-            label.Click += (sender, args) => Console.WriteLine("Label clicked!");
+            label.BackColor = Color.FromArgb(200, Color.White);
+            label.BackgroundImage = new Surface(Resources.Surface);
+            label.Click += (sender, args) => Console.WriteLine(@"Label clicked!");
 
             var button = new Button(new Size(50, 50), new Point(50, 50));
 
@@ -44,14 +44,14 @@ namespace SdlDotNet.TestApplication
             {
                 FieldSize = new Size(300, 25)
             };
-            textBox.GotFocus += (sender, args) => Console.WriteLine("Textbox focus got!");
-            textBox.LostFocus += (sender, args) => Console.WriteLine("Textbox focus lost!");
+            textBox.GotFocus += (sender, args) => Console.WriteLine(@"Textbox focus got!");
+            textBox.LostFocus += (sender, args) => Console.WriteLine(@"Textbox focus lost!");
 
 
-            button.Click += (sender, eventArgs) => Console.WriteLine("Click on the button!");
-            button.MouseEnter += (sender, args) => Console.WriteLine("Mouse entered on the button!");
-            button.MouseHover += (sender, args) => Console.WriteLine("Mouse hover the button!");
-            button.MouseLeave += (sender, args) => Console.WriteLine("Mouse left the button!");
+            button.Click += (sender, eventArgs) => Console.WriteLine(@"Click on the button!");
+            button.MouseEnter += (sender, args) => Console.WriteLine(@"Mouse entered on the button!");
+            button.MouseHover += (sender, args) => Console.WriteLine(@"Mouse hover the button!");
+            button.MouseLeave += (sender, args) => Console.WriteLine(@"Mouse left the button!");
             button.Surface.Fill(Color.SteelBlue);
 
             _spriteCollection.Add(label);

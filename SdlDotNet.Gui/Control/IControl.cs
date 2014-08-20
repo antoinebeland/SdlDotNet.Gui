@@ -37,9 +37,24 @@ namespace SdlDotNet.Gui.Control
         /// </summary>
         Color BackColor { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the text of the control.
+        /// </summary>
         string Text { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the font name of the control.
+        /// </summary>
         string FontName { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the font height of the control.
+        /// </summary>
         int FontHeight { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the fore color of the control.
+        /// </summary>
         Color ForeColor { get; set; }
     }
 }

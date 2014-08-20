@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Timers;
 using SdlDotNet.Core;
 using SdlDotNet.Graphics;
-using SdlDotNet.Gui.Configurations;
 using SdlDotNet.Gui.Utilities;
 using SdlDotNet.Input;
 using Font = SdlDotNet.Graphics.Font;
@@ -21,7 +20,7 @@ namespace SdlDotNet.Gui.Control
         private bool _displayFocusChar;
         private string _focusChar;
 
-        public TextBox(Size fieldSize, Point location, ControlConfiguration configuration) : 
+        public TextBox(Size fieldSize, Point location, TextConfiguration configuration) : 
             base(location, configuration)
         {
             _fieldSize = fieldSize;
@@ -35,7 +34,7 @@ namespace SdlDotNet.Gui.Control
             _keyboardListener.KeyboardEvent += KeyboardEvent;
             Events.MouseButtonDown += ClickEvent;
 
-            SetSurface(ControlConfiguration);
+            BackColor = Color.White;
         }
 
         public Size FieldSize
@@ -44,7 +43,7 @@ namespace SdlDotNet.Gui.Control
             set
             {
                 _fieldSize = value;
-                SetSurface(ControlConfiguration);
+                SetSurface();
             }
         }
 
@@ -53,24 +52,24 @@ namespace SdlDotNet.Gui.Control
             _focusChar = (_displayFocusChar) ? "|" : String.Empty;
             _displayFocusChar = !_displayFocusChar;
 
-            SetSurface(ControlConfiguration);
+            SetSurface();
         }
 
         private void ClickEvent(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             _keyboardListener.IsListening = IsSelected(mouseButtonEventArgs.Position);
 
-            if (Focused && !_timer.Enabled)
+            if (IsFocused && !_timer.Enabled)
             {
                 _timer.Start();
-                SetSurface(ControlConfiguration);
+                SetSurface();
             }
             else if(_timer.Enabled)
             {
                 _timer.Stop();
                 _displayFocusChar = false;
                 _focusChar = "|";
-                SetSurface(ControlConfiguration);
+                SetSurface();
             }
         }
 
@@ -79,23 +78,23 @@ namespace SdlDotNet.Gui.Control
             Text = text;
         }
 
-        protected override Surface CreateSurface(ControlConfiguration configuration)
+        protected override Surface CreateSurface()
         {
-            Surface textSurface = new Font(configuration.FontName, configuration.FontHeight)
-                .Render(configuration.Text, configuration.ForeColor, true);
+            Surface textSurface = new Font(FontName, FontHeight)
+                .Render(Text, ForeColor, true);
 
             // TODO: What whe doing in the case: Color.Transparent... 
-            if (configuration.BackColor != Color.Transparent)
+            if (BackColor != Color.Transparent)
             {
                 var backgroundSurface = new Surface(_fieldSize);
-                backgroundSurface.Fill(configuration.BackColor);
+                backgroundSurface.Fill(BackColor);
 
                 backgroundSurface.Blit(textSurface);
 
-                if (Focused)
+                if (IsFocused)
                 {
-                    var focusSurface = new Font(configuration.FontName, configuration.FontHeight)
-                        .Render(_focusChar, configuration.ForeColor, true);
+                    var focusSurface = new Font(FontName, FontHeight)
+                        .Render(_focusChar, ForeColor, true);
 
                     backgroundSurface.Blit(focusSurface, new Point(textSurface.Width, 0));
                 }
@@ -104,7 +103,6 @@ namespace SdlDotNet.Gui.Control
             }
 
             return textSurface;
-            
         }
     }
 }
