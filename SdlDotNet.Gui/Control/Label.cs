@@ -25,7 +25,7 @@ namespace SdlDotNet.Gui.Control
         ///     Creates a new surface for the label.
         /// </summary>
         /// <returns>New surface representing the label</returns>
-        protected override sealed Surface CreateSurface()
+        protected override Surface CreateSurface()
         {
             var text = new Font(FontName, FontHeight).Render(Text, ForeColor, true);
 
