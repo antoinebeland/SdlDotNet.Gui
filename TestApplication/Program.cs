@@ -25,7 +25,7 @@ namespace TestApplication
             Events.Tick += EventsOnTick;
             var controlConfiguration = new TextConfiguration
             {
-                ForeColor = Color.Black,
+                TextColor = Color.Black,
                 FontHeight = 24,
                 FontName = @"arial.ttf",
                 Text = "Hello world!",

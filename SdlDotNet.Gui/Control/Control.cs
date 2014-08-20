@@ -162,14 +162,14 @@ namespace SdlDotNet.Gui.Control
         }
 
         /// <summary>
-        ///     Gets or sets the fore color of the control.
+        ///     Gets or sets the text color of the control.
         /// </summary>
-        public Color ForeColor
+        public Color TextColor
         {
-            get { return _textConfiguration.ForeColor; }
+            get { return _textConfiguration.TextColor; }
             set
             {
-                _textConfiguration.ForeColor = value;
+                _textConfiguration.TextColor = value;
                 SetSurface();
             }
         }

@@ -27,7 +27,7 @@ namespace SdlDotNet.Gui.Control
         /// <returns>New surface representing the label</returns>
         protected override Surface CreateSurface()
         {
-            var text = new Font(FontName, FontHeight).Render(Text, ForeColor, true);
+            var text = new Font(FontName, FontHeight).Render(Text, TextColor, true);
 
             if (BackgroundImage == null && BackColor == Color.Transparent)
                 return text;

@@ -81,7 +81,7 @@ namespace SdlDotNet.Gui.Control
         protected override Surface CreateSurface()
         {
             Surface textSurface = new Font(FontName, FontHeight)
-                .Render(Text, ForeColor, true);
+                .Render(Text, TextColor, true);
 
             // TODO: What whe doing in the case: Color.Transparent... 
             if (BackColor != Color.Transparent)
@@ -94,7 +94,7 @@ namespace SdlDotNet.Gui.Control
                 if (IsFocused)
                 {
                     var focusSurface = new Font(FontName, FontHeight)
-                        .Render(_focusChar, ForeColor, true);
+                        .Render(_focusChar, TextColor, true);
 
                     backgroundSurface.Blit(focusSurface, new Point(textSurface.Width, 0));
                 }

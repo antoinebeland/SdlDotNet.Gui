@@ -53,8 +53,8 @@ namespace SdlDotNet.Gui.Control
         int FontHeight { get; set; }
 
         /// <summary>
-        ///     Gets or sets the fore color of the control.
+        ///     Gets or sets the text color of the control.
         /// </summary>
-        Color ForeColor { get; set; }
+        Color TextColor { get; set; }
     }
 }
